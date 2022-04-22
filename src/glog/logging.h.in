@@ -92,6 +92,13 @@
 #if @ac_cv_cxx11_atomic@ && __cplusplus >= 201103L
 #include <atomic>
 #elif defined(GLOG_OS_WINDOWS)
+// To avoid macro definition of min/max.
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN  /* We always want minimal includes */
+#endif
 #include <Windows.h>
 #endif
 

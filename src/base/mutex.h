@@ -126,6 +126,9 @@
 # ifndef NOMINMAX
 #  define NOMINMAX
 # endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN  /* We always want minimal includes */
+#endif
 # include <windows.h>
   typedef CRITICAL_SECTION MutexType;
 #elif defined(HAVE_PTHREAD) && defined(HAVE_RWLOCK)
