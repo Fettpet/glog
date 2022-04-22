@@ -1398,11 +1398,12 @@ vector<string> LogCleaner::GetOverdueLogNames(
   vector<string> overdue_log_names;
 
   // Try to get all files within log_directory.
-  DIR *dir;
-  struct dirent *ent;
+  DIR *dir = opendir(log_directory.c_str());
 
-  if ((dir = opendir(log_directory.c_str()))) {
-    while ((ent = readdir(dir))) {
+
+  if (dir != NULL) {
+    struct dirent *ent = readdir(dir);
+    while (ent) {
       if (strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0) {
         continue;
       }
@@ -1421,6 +1422,7 @@ vector<string> LogCleaner::GetOverdueLogNames(
           IsLogLastModifiedOver(filepath, days)) {
         overdue_log_names.push_back(filepath);
       }
+      ent = readdir(dir);
     }
     closedir(dir);
   }
@@ -2379,6 +2381,9 @@ void GetExistingTempDirectories(vector<string>* list) {
 
 void TruncateLogFile(const char *path, uint64 limit, uint64 keep) {
 #ifdef HAVE_UNISTD_H
+  (void)path;
+  (void)limit;
+  (void)keep;
   struct stat statbuf;
   const int kCopyBlockSize = 8 << 10;
   char copybuf[kCopyBlockSize];
@@ -2452,6 +2457,9 @@ void TruncateLogFile(const char *path, uint64 limit, uint64 keep) {
   close(fd);
 #else
   LOG(ERROR) << "No log truncation support.";
+  (void)path;
+  (void)limit;
+  (void)keep;
 #endif
  }
 
