@@ -367,9 +367,7 @@ bool IsFailureSignalHandlerInstalled() {
   memset(&sig_action, 0, sizeof(sig_action));
   sigemptyset(&sig_action.sa_mask);
   sigaction(SIGABRT, NULL, &sig_action);
-  if (sig_action.sa_sigaction == &FailureSignalHandler) {
-    return true;
-  }
+  return sig_action.sa_sigaction == &FailureSignalHandler;
 #elif defined(GLOG_OS_WINDOWS)
   return kFailureSignalHandlerInstalled;
 #else  // HAVE_SIGACTION
