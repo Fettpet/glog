@@ -372,8 +372,9 @@ bool IsFailureSignalHandlerInstalled() {
   }
 #elif defined(GLOG_OS_WINDOWS)
   return kFailureSignalHandlerInstalled;
-#endif  // HAVE_SIGACTION
+#else  // HAVE_SIGACTION
   return false;
+#endif
 }
 
 }  // namespace glog_internal_namespace_
