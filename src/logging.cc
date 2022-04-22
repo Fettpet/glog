@@ -1398,11 +1398,12 @@ vector<string> LogCleaner::GetOverdueLogNames(
   vector<string> overdue_log_names;
 
   // Try to get all files within log_directory.
-  DIR *dir;
-  struct dirent *ent;
+  DIR *dir = opendir(log_directory.c_str());
 
-  if ((dir = opendir(log_directory.c_str()))) {
-    while ((ent = readdir(dir))) {
+
+  if (dir != NULL) {
+    struct dirent *ent = readdir(dir);
+    while (ent) {
       if (strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0) {
         continue;
       }
@@ -1421,6 +1422,7 @@ vector<string> LogCleaner::GetOverdueLogNames(
           IsLogLastModifiedOver(filepath, days)) {
         overdue_log_names.push_back(filepath);
       }
+      ent = readdir(dir);
     }
     closedir(dir);
   }
