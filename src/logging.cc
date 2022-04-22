@@ -2379,6 +2379,9 @@ void GetExistingTempDirectories(vector<string>* list) {
 
 void TruncateLogFile(const char *path, uint64 limit, uint64 keep) {
 #ifdef HAVE_UNISTD_H
+  (void)path;
+  (void)limit;
+  (void)keep;
   struct stat statbuf;
   const int kCopyBlockSize = 8 << 10;
   char copybuf[kCopyBlockSize];
@@ -2452,6 +2455,9 @@ void TruncateLogFile(const char *path, uint64 limit, uint64 keep) {
   close(fd);
 #else
   LOG(ERROR) << "No log truncation support.";
+  (void)path;
+  (void)limit;
+  (void)keep;
 #endif
  }
 
