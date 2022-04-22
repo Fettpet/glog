@@ -724,7 +724,7 @@ endif (WITH_PKGCONFIG)
 
 # Unit testing
 
-if (BUILD_TESTING)
+if (GLOG_BUILD_TESTING)
   add_library (glogtest STATIC
     $<TARGET_OBJECTS:glogbase>
   )
@@ -985,7 +985,7 @@ if (BUILD_TESTING)
   set_tests_properties (cleanup_immediately PROPERTIES FIXTURES_REQUIRED logcleanuptest)
   set_tests_properties (cleanup_with_absolute_prefix PROPERTIES FIXTURES_REQUIRED logcleanuptest)
   set_tests_properties (cleanup_with_relative_prefix PROPERTIES FIXTURES_REQUIRED logcleanuptest)
-endif (BUILD_TESTING)
+endif (GLOG_BUILD_TESTING)
 
 install (TARGETS glog
   EXPORT glog-targets
